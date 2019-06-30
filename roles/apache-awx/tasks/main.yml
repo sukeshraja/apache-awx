@@ -1,0 +1,27 @@
+---
+-
+  gather_facts: yes
+  hosts: all
+  ignore_errors: true
+  tasks:
+    -
+      command: "systemctl status \"{{ service }}\""
+      name: "check the status httpd"
+      register: status
+    -
+      debug: "msg:\\\"{{status.stdstatus}}\\\" var= stopped"
+    -
+      name: "Restart service when stopped"
+      register: restart_svc
+      service:
+        name: "{{ service }}"
+        state: restarted
+      when: "httpd status == \" stopped \""
+    -
+      name: "start httpd"
+      register: out
+      service:
+        name: "{{ service }}"
+        status: running
+    -
+      debug: "msg:\"{{out.stdout}}\""
