@@ -1,0 +1,13 @@
+--- 
+- 
+  become: true
+  name: "start httpd"
+  service: "name=\"{{ httpd_service }}\" state=started"
+- 
+  become: true
+  name: "stop httpd"
+  service: "name=\"{{ httpd_service }}\" state=stopped"
+- 
+  become: true
+  name: "restart httpd"
+  service: "name=\"{{ httpd_service }}\" state=restarted"
