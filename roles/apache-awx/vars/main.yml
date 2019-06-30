@@ -1,0 +1,6 @@
+
+---
+# file: httpd/vars/build.yml
+#
+
+service: httpd
