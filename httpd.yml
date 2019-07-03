@@ -1,0 +1,22 @@
+--
+- name: httpd playbook
+  hosts: local
+  tasks:
+   - name: checking the status
+     shell: systemctl status "{{ service }}"
+     register: status
+     ignore_errors: yes
+
+   - debug:
+       var: status.rc
+
+
+   - name: restart if stopped
+     service:
+       name: nginx
+       state: restarted
+     when: status.rc != 0
+     register: restart
+
+   - debug:
+       var: restart
